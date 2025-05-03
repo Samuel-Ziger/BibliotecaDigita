@@ -26,6 +26,10 @@ public class LivroPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
+        // Ajustar GridBagConstraints para permitir expansão horizontal
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+
         // Campo ID
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -33,6 +37,7 @@ public class LivroPanel extends JPanel {
         gbc.gridx = 1;
         txtId = new JTextField(20);
         txtId.setEditable(false);
+        txtId.setPreferredSize(new Dimension(150, 25));
         add(txtId, gbc);
 
         // Campo Título
@@ -41,6 +46,7 @@ public class LivroPanel extends JPanel {
         add(new JLabel("Título:"), gbc);
         gbc.gridx = 1;
         txtTitulo = new JTextField(20);
+        txtTitulo.setPreferredSize(new Dimension(150, 25));
         add(txtTitulo, gbc);
 
         // Campo Autor
@@ -49,6 +55,7 @@ public class LivroPanel extends JPanel {
         add(new JLabel("Autor:"), gbc);
         gbc.gridx = 1;
         txtAutor = new JTextField(20);
+        txtAutor.setPreferredSize(new Dimension(150, 25));
         add(txtAutor, gbc);
 
         // Campo Editora
@@ -57,6 +64,7 @@ public class LivroPanel extends JPanel {
         add(new JLabel("Editora:"), gbc);
         gbc.gridx = 1;
         txtEditora = new JTextField(20);
+        txtEditora.setPreferredSize(new Dimension(150, 25));
         add(txtEditora, gbc);
 
         // Painel de botões
@@ -109,6 +117,19 @@ public class LivroPanel extends JPanel {
 
     private void gravarLivro() {
         try {
+            if (txtTitulo.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O campo Título é obrigatório!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (txtAutor.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O campo Autor é obrigatório!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (txtEditora.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O campo Editora é obrigatório!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             Livro livro = new Livro();
             livro.setTitulo(txtTitulo.getText());
             livro.setAutor(txtAutor.getText());
@@ -150,11 +171,15 @@ public class LivroPanel extends JPanel {
                 return;
             }
 
-            int id = Integer.parseInt(txtId.getText());
-            livroDAO.deletar(id);
-            JOptionPane.showMessageDialog(this, "Livro deletado com sucesso!");
-            limparCampos();
-            carregarDadosTabela();
+            int response = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este livro?", "Confirmação de Exclusão",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                int id = Integer.parseInt(txtId.getText());
+                livroDAO.deletar(id);
+                JOptionPane.showMessageDialog(this, "Livro deletado com sucesso!");
+                limparCampos();
+                carregarDadosTabela();
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao deletar livro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -169,7 +194,7 @@ public class LivroPanel extends JPanel {
 
     private void carregarDadosTabela() {
         try {
-            List<Livro> livros = livroDAO.listarTodos();
+            List<Livro> livros = livroDAO.listarTodos(10, 0);
             String[] colunas = {"ID", "Título", "Autor", "Editora"};
             Object[][] dados = new Object[livros.size()][4];
             

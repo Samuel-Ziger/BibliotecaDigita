@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConexaoDB {
     private static final String URL = "jdbc:postgresql://localhost:5432/biblioteca";
     private static final String USUARIO = "postgres";
-    private static final String SENHA = "@Nt1p@r1d@d3";
+    private static final String SENHA = "postgres";
 
     public static Connection getConexao() throws SQLException {
         try {

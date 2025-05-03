@@ -22,4 +22,11 @@ CREATE TABLE IF NOT EXISTS emprestimo (
     data_devolucao DATE,
     FOREIGN KEY (aluno_id) REFERENCES aluno(id),
     FOREIGN KEY (livro_id) REFERENCES livro(id)
-); 
+);
+
+-- Índices para melhorar o desempenho das consultas
+CREATE INDEX idx_aluno_nome ON aluno(nome);
+CREATE INDEX idx_livro_titulo ON livro(titulo);
+CREATE INDEX idx_emprestimo_aluno_id ON emprestimo(aluno_id);
+CREATE INDEX idx_emprestimo_livro_id ON emprestimo(livro_id);
+CREATE INDEX idx_emprestimo_data_emprestimo ON emprestimo(data_emprestimo); 

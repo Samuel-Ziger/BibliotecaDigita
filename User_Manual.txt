@@ -1,0 +1,174 @@
+# Manual do Usuário - Sistema de Biblioteca
+
+## Introdução
+Bem-vindo ao Sistema de Biblioteca. Este sistema foi desenvolvido para gerenciar empréstimos de livros de forma eficiente e intuitiva.
+
+## Público-Alvo
+Este manual é destinado a desenvolvedores (devs) que irão utilizar e manter o sistema.
+
+## Instalação
+1. Certifique-se de ter o Java instalado em seu sistema.
+2. Clone o repositório do projeto para sua máquina local.
+3. Navegue até o diretório do projeto e compile o código usando o comando `javac`.
+4. Execute o sistema com o comando `java`.
+
+## Navegação
+- O sistema possui uma interface gráfica com abas para gerenciar Alunos, Livros e Empréstimos.
+- Use as abas no topo da janela para navegar entre as diferentes seções.
+
+## Funcionalidades Principais
+- **CRUD de Alunos, Livros e Empréstimos:** Permite criar, ler, atualizar e deletar registros.
+- **Geração de Relatórios:** Crie relatórios detalhados de empréstimos com opções de filtro e ordenação.
+
+## Dicas e Truques
+- Utilize os filtros nos relatórios para encontrar informações rapidamente.
+- Verifique as mensagens de confirmação para garantir que as operações foram bem-sucedidas.
+
+## Resolução de Problemas
+- **Problema:** O sistema não inicia.
+  **Solução:** Verifique se o Java está instalado corretamente e se todas as dependências estão configuradas.
+- **Problema:** Erros ao salvar dados.
+  **Solução:** Verifique a conexão com o banco de dados e as permissões de acesso.
+
+## Contato para Suporte
+Para suporte técnico, entre em contato com a equipe de desenvolvimento através do e-mail suporte@biblioteca.com.
+
+## Backup do Banco de Dados
+
+### Introdução
+Este manual fornece instruções detalhadas sobre como configurar e gerenciar backups automáticos do banco de dados para garantir a segurança e integridade dos dados.
+
+### Criação do Script de Backup
+
+1. **Ferramenta de Backup:**
+   - Para MySQL, use `mysqldump`.
+   - Para PostgreSQL, use `pg_dump`.
+
+2. **Exemplo de Script para MySQL:**
+   ```bash
+   #!/bin/bash
+   TIMESTAMP=$(date +"%F")
+   BACKUP_DIR="/caminho/para/backup"
+   MYSQL_USER="seu_usuario"
+   MYSQL_PASSWORD="sua_senha"
+   MYSQL_DATABASE="seu_banco_de_dados"
+
+   mkdir -p "$BACKUP_DIR/$TIMESTAMP"
+   mysqldump -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE > "$BACKUP_DIR/$TIMESTAMP/$MYSQL_DATABASE.sql"
+   ```
+
+3. **Exemplo de Script para PostgreSQL:**
+   ```bash
+   #!/bin/bash
+   TIMESTAMP=$(date +"%F")
+   BACKUP_DIR="/caminho/para/backup"
+   PG_USER="seu_usuario"
+   PG_DATABASE="seu_banco_de_dados"
+
+   mkdir -p "$BACKUP_DIR/$TIMESTAMP"
+   pg_dump -U $PG_USER $PG_DATABASE > "$BACKUP_DIR/$TIMESTAMP/$PG_DATABASE.sql"
+   ```
+
+### Agendamento do Backup
+
+#### No Windows:
+
+1. **Abra o Agendador de Tarefas:**
+   - Pressione `Win + R`, digite `taskschd.msc` e pressione `Enter`.
+
+2. **Crie uma Nova Tarefa:**
+   - Clique em "Criar Tarefa Básica" e siga as instruções para definir o nome, gatilho e ação.
+
+3. **Defina a Ação:**
+   - Escolha "Iniciar um Programa" e selecione o script de backup.
+
+4. **Finalize e Verifique:**
+   - Conclua a configuração e verifique se a tarefa está listada corretamente.
+
+#### No Linux:
+
+1. **Abra o Crontab:**
+   - Execute `crontab -e` no terminal.
+
+2. **Adicione a Entrada:**
+   - Exemplo para execução diária às 2h:
+     ```bash
+     0 2 * * * /caminho/para/seu/script_de_backup.sh
+     ```
+
+3. **Salve e Verifique:**
+   - Salve as alterações e use `crontab -l` para verificar.
+
+### Verificação e Restauração de Backups
+
+1. **Verifique os Backups:**
+   - Regularmente, verifique se os arquivos de backup estão sendo criados no diretório especificado.
+
+2. **Restauração:**
+   - Para restaurar um backup, use o comando apropriado para o seu banco de dados (ex.: `mysql` ou `psql`) e aponte para o arquivo de backup.
+
+### Dicas de Segurança
+
+- **Proteja os Scripts:** Certifique-se de que os scripts de backup não estejam acessíveis a usuários não autorizados.
+- **Armazene Backups com Segurança:** Considere armazenar backups em um local seguro, como um servidor remoto ou serviço de armazenamento em nuvem.
+
+## Login no Sistema
+
+### Interface de Login
+- Ao iniciar o sistema, a primeira tela exibida é a de login.
+- A interface de login solicita que o usuário insira seu nome de usuário e senha.
+
+### Processo de Autenticação
+- O sistema verifica as credenciais inseridas comparando com os registros no banco de dados.
+- Se as credenciais estiverem corretas, o usuário é redirecionado para a tela principal do sistema.
+- Em caso de falha na autenticação, uma mensagem de erro é exibida solicitando a correção das credenciais.
+
+### Problemas Comuns
+- **Problema:** Não é possível fazer login.
+  **Solução:** Verifique se o nome de usuário e a senha estão corretos. Certifique-se de que o banco de dados está acessível e que as credenciais têm permissão para acessar o banco de dados.
+
+### Segurança
+- As senhas são armazenadas no banco de dados de forma segura, utilizando hash para proteção.
+- Recomenda-se alterar as senhas periodicamente e utilizar senhas fortes para aumentar a segurança do sistema.
+
+## Segurança das Conexões com o Banco de Dados
+
+### Configurar o PostgreSQL para Usar SSL
+
+1. **Habilitar SSL no PostgreSQL:**
+   - Edite o arquivo `postgresql.conf` e defina `ssl = on`.
+
+2. **Configurar Certificados:**
+   - Certifique-se de que os certificados SSL estão configurados corretamente no servidor PostgreSQL. Você precisará de um certificado de servidor (`server.crt`) e uma chave privada (`server.key`).
+
+3. **Reiniciar o PostgreSQL:**
+   - Após configurar os certificados, reinicie o servidor PostgreSQL para aplicar as mudanças.
+
+### Atualizar o Código Java para Usar SSL
+
+1. **Modificar a URL de Conexão:**
+   - Atualize a URL de conexão no código Java para incluir `?ssl=true`.
+
+2. **Configurar Truststore no Java:**
+   - Se o certificado do servidor não for assinado por uma autoridade de certificação confiável, configure um `truststore` no Java para confiar no certificado do servidor.
+   - Use o comando `keytool` para importar o certificado do servidor no `truststore`:
+     ```bash
+     keytool -import -alias postgresql -file server.crt -keystore truststore.jks
+     ```
+   - Ao executar sua aplicação, especifique o `truststore`:
+     ```bash
+     java -Djavax.net.ssl.trustStore=truststore.jks -Djavax.net.ssl.trustStorePassword=senha_do_truststore -jar seu_aplicativo.jar
+     ```
+
+### Restringir Acesso no PostgreSQL
+
+1. **Configurar `pg_hba.conf`:**
+   - Edite o arquivo `pg_hba.conf` para permitir apenas conexões de hosts confiáveis e use métodos de autenticação seguros, como `md5` ou `scram-sha-256`.
+
+### Manter o Sistema Atualizado
+
+1. **Atualizar o Driver JDBC:**
+   - Certifique-se de que está usando a versão mais recente do driver JDBC do PostgreSQL, que pode incluir melhorias de segurança.
+
+2. **Manter o PostgreSQL Atualizado:**
+   - Mantenha o PostgreSQL atualizado para garantir que você tenha as últimas correções de segurança. 

@@ -25,6 +25,10 @@ public class AlunoPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
+        // Ajustar GridBagConstraints para permitir expansão horizontal
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+
         // Campo ID
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -32,6 +36,7 @@ public class AlunoPanel extends JPanel {
         gbc.gridx = 1;
         txtId = new JTextField(20);
         txtId.setEditable(false);
+        txtId.setPreferredSize(new Dimension(150, 25));
         add(txtId, gbc);
 
         // Campo Nome
@@ -40,6 +45,7 @@ public class AlunoPanel extends JPanel {
         add(new JLabel("Nome:"), gbc);
         gbc.gridx = 1;
         txtNome = new JTextField(20);
+        txtNome.setPreferredSize(new Dimension(150, 25));
         add(txtNome, gbc);
 
         // Campo Matrícula
@@ -48,6 +54,7 @@ public class AlunoPanel extends JPanel {
         add(new JLabel("Matrícula:"), gbc);
         gbc.gridx = 1;
         txtMatricula = new JTextField(20);
+        txtMatricula.setPreferredSize(new Dimension(150, 25));
         add(txtMatricula, gbc);
 
         // Painel de botões
@@ -100,6 +107,15 @@ public class AlunoPanel extends JPanel {
 
     private void gravarAluno() {
         try {
+            if (txtNome.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O campo Nome é obrigatório!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (txtMatricula.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "O campo Matrícula é obrigatório!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             Aluno aluno = new Aluno();
             aluno.setNome(txtNome.getText());
             aluno.setMatricula(txtMatricula.getText());
@@ -139,11 +155,15 @@ public class AlunoPanel extends JPanel {
                 return;
             }
 
-            int id = Integer.parseInt(txtId.getText());
-            alunoDAO.deletar(id);
-            JOptionPane.showMessageDialog(this, "Aluno deletado com sucesso!");
-            limparCampos();
-            carregarDadosTabela();
+            int response = JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este aluno?", "Confirmação de Exclusão",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                int id = Integer.parseInt(txtId.getText());
+                alunoDAO.deletar(id);
+                JOptionPane.showMessageDialog(this, "Aluno deletado com sucesso!");
+                limparCampos();
+                carregarDadosTabela();
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao deletar aluno: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -157,7 +177,7 @@ public class AlunoPanel extends JPanel {
 
     private void carregarDadosTabela() {
         try {
-            List<Aluno> alunos = alunoDAO.listarTodos();
+            List<Aluno> alunos = alunoDAO.listarTodos(10, 0);
             String[] colunas = {"ID", "Nome", "Matrícula"};
             Object[][] dados = new Object[alunos.size()][3];
             

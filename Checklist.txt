@@ -1,0 +1,40 @@
+### Funcionalidades CRUD
+- [x] Garantir que todas as operações CRUD (Create, Read, Update, Delete) estejam funcionando corretamente para cada tabela.
+- [x] Adicionar mensagens de confirmação para operações de exclusão.
+- [x] Implementar feedback visual para operações bem-sucedidas ou falhas.
+
+### Banco de Dados
+- [x] Implementar transações para garantir a integridade dos dados.
+- [x] Otimizar as consultas SQL para melhorar o desempenho.
+- [x] Adicionar índices nas colunas frequentemente usadas em cláusulas WHERE, JOIN, ORDER BY.
+- [x] Revisar consultas para evitar SELECT * e especificar apenas as colunas necessárias.
+- [x] Configurar backups automáticos do banco de dados.
+- [x] Criar um script de backup usando pg_dump.
+- [x] Agendar o script de backup para execução automática.
+
+### Interface Gráfica (JFrame)
+- [x] Melhorar o design da interface para torná-la mais intuitiva e amigável.
+- [ ] Adicionar ícones aos botões para melhor usabilidade.
+- [x] Implementar validação de dados nos formulários para evitar entradas inválidas.
+
+### Relatórios
+- [x] Melhorar o layout do relatório de empréstimos para torná-lo mais legível.
+- [x] Adicionar opções de filtro e ordenação nos relatórios.
+- [ ] Implementar a exportação de relatórios para formatos como PDF ou Excel.
+
+### Segurança
+- [x] Implementar autenticação de usuário para acesso ao sistema.
+- [x] Proteger contra injeção de SQL.
+- [x] Garantir que as conexões com o banco de dados sejam seguras.
+
+### Documentação
+- [x] Criar documentação do código para facilitar a manutenção futura.
+- [x] Incluir um manual do usuário para ajudar novos usuários a entenderem o sistema.
+
+### Testes
+- [ ] Implementar testes unitários para as principais funcionalidades.
+- [ ] Realizar testes de usabilidade com usuários reais para identificar áreas de melhoria.
+
+### Desempenho
+- [ ] Monitorar o uso de recursos do sistema e otimizar conforme necessário.
+- [ ] Reduzir o tempo de carregamento da aplicação. 
