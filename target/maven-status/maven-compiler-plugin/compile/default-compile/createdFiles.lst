@@ -1,7 +1,9 @@
 com\biblioteca\ui\EmprestimoPanel.class
 com\biblioteca\model\Aluno.class
 com\biblioteca\ui\LivroPanel$1.class
+com\biblioteca\ui\LoginFrame$1.class
 com\biblioteca\ui\LivroPanel.class
+com\biblioteca\ui\LoginFrame.class
 com\biblioteca\dao\AlunoDAO.class
 com\biblioteca\ui\EmprestimoPanel$1.class
 com\biblioteca\db\ConexaoDB.class
