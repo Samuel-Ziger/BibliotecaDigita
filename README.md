@@ -57,4 +57,3 @@ O sistema possui três abas principais:
 ## Interface
 
 A interface gráfica foi desenvolvida usando Java Swing, com um layout intuitivo e fácil de usar. Cada aba possui campos específicos para o tipo de dado que está sendo manipulado e botões para as operações CRUD. 
-executar mvn exec:java
